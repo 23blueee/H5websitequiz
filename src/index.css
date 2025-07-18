@@ -45,9 +45,6 @@
   }
 
   /* 全局样式重置 */
-  * {
-    @apply border-border;
-  }
 
   /* 根元素基础样式 */
   :root {
@@ -62,7 +59,6 @@
 
   /* 主体样式 */
   body {
-    @apply bg-background text-foreground;
     margin: 0;
   }
 

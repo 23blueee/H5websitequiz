@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { questions } from "../data/questions";
 import { Button } from "@/components/ui/button";
-import {
-  Alert,
-  AlertDescription,
-} from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 /**
  * 答题页结构：顶部栏（回首页，sticky），题目区域（紧随header），底部操作按钮
@@ -13,18 +10,11 @@ import {
  */
 const Quiz: React.FC = () => {
   const navigate = useNavigate();
-  const [current, setCurrent] =
-    useState(0);
-  const [answers, setAnswers] =
-    useState<{ [key: number]: string }>(
-      {}
-    );
-  const [error, setError] =
-    useState("");
+  const [current, setCurrent] = useState(0);
+  const [answers, setAnswers] = useState<{ [key: number]: string }>({});
+  const [error, setError] = useState("");
 
-  const handleSelect = (
-    val: string
-  ) => {
+  const handleSelect = (val: string) => {
     setAnswers({
       ...answers,
       [current]: val,
@@ -48,10 +38,7 @@ const Quiz: React.FC = () => {
       setError("请先选择本题答案");
       return;
     }
-    if (
-      Object.keys(answers).length <
-      questions.length
-    ) {
+    if (Object.keys(answers).length < questions.length) {
       setError("请先完成全部试题");
       return;
     }
@@ -95,21 +82,11 @@ const Quiz: React.FC = () => {
                     type="radio"
                     name={`q${current}`}
                     value={opt[0]}
-                    checked={
-                      answers[
-                        current
-                      ] === opt[0]
-                    }
-                    onChange={() =>
-                      handleSelect(
-                        opt[0]
-                      )
-                    }
+                    checked={answers[current] === opt[0]}
+                    onChange={() => handleSelect(opt[0])}
                     className="mr-4 accent-blue-600 w-5 h-5"
                   />
-                  <span className="flex-1">
-                    {opt}
-                  </span>
+                  <span className="flex-1">{opt}</span>
                 </label>
               ))}
             </div>
@@ -119,10 +96,7 @@ const Quiz: React.FC = () => {
           {/* 错误提示 */}
           {error && (
             <div className="w-full px-4">
-              <Alert
-                variant="destructive"
-                className="mb-2"
-              >
+              <Alert variant="destructive" className="mb-2">
                 <AlertDescription className="text-center text-sm">
                   {error}
                 </AlertDescription>
@@ -146,8 +120,7 @@ const Quiz: React.FC = () => {
         >
           上一题
         </Button>
-        {current <
-        questions.length - 1 ? (
+        {current < questions.length - 1 ? (
           <Button
             className="w-1/2 h-16 text-lg rounded-full"
             onClick={handleNext}

@@ -24,35 +24,22 @@ import { CustomDialog } from "@/components/ui/CustomDialog";
 const FormPage: React.FC = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [phone, setPhone] =
-    useState("");
+  const [phone, setPhone] = useState("");
   const [site, setSite] = useState("");
-  const [error, setError] =
-    useState("");
-  const [drawerOpen, setDrawerOpen] =
-    useState(false);
-  const [showSuccess, setShowSuccess] =
-    useState(false);
-  const [showError, setShowError] =
-    useState(false);
-  const [
-    isSubmitting,
-    setIsSubmitting,
-  ] = useState(false);
+  const [error, setError] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // 前端校验错误状态
-  const [
-    validationErrors,
-    setValidationErrors,
-  ] = useState<{
+  const [validationErrors, setValidationErrors] = useState<{
     name?: string;
     phone?: string;
     site?: string;
   }>({});
 
   // 表单提交处理
-  const handleSubmit = async (
-    e: React.FormEvent
-  ) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // 清除之前的错误
@@ -70,17 +57,14 @@ const FormPage: React.FC = () => {
       errors.name = "请输入姓名";
     }
     if (!/^1[3-9]\d{9}$/.test(phone)) {
-      errors.phone =
-        "请输入有效的手机号";
+      errors.phone = "请输入有效的手机号";
     }
     if (!site) {
       errors.site = "请选择领取地址";
     }
 
     // 如果有前端校验错误，显示错误信息并返回
-    if (
-      Object.keys(errors).length > 0
-    ) {
+    if (Object.keys(errors).length > 0) {
       setValidationErrors(errors);
       return;
     }
@@ -101,39 +85,18 @@ const FormPage: React.FC = () => {
       // 处理提交后的错误（使用弹窗）
       console.error("提交失败:", error);
 
-      let errorMessage =
-        "提交失败，请稍后重试";
+      let errorMessage = "提交失败，请稍后重试";
 
       if (error instanceof Error) {
         // 优先使用后端返回的具体错误信息
-        if (
-          error.message.includes(
-            "活动数量已完成"
-          )
-        ) {
-          errorMessage =
-            "很抱歉，活动名额已满，感谢您的参与！";
-        } else if (
-          error.message.includes(
-            "重复添加"
-          )
-        ) {
-          errorMessage =
-            "该手机号已存在，请使用其他手机号";
-        } else if (
-          error.message.includes(
-            "网络连接失败"
-          )
-        ) {
-          errorMessage =
-            "网络连接失败，请检查网络连接或联系管理员";
-        } else if (
-          error.message.includes(
-            "Network Error"
-          )
-        ) {
-          errorMessage =
-            "网络错误，可能是跨域问题，请联系管理员";
+        if (error.message.includes("活动数量已完成")) {
+          errorMessage = "很抱歉，活动名额已满，感谢您的参与！";
+        } else if (error.message.includes("重复添加")) {
+          errorMessage = "该手机号已存在，请使用其他手机号";
+        } else if (error.message.includes("网络连接失败")) {
+          errorMessage = "网络连接失败，请检查网络连接或联系管理员";
+        } else if (error.message.includes("Network Error")) {
+          errorMessage = "网络错误，可能是跨域问题，请联系管理员";
         } else {
           // 使用后端返回的具体错误信息
           errorMessage = error.message;
@@ -151,29 +114,18 @@ const FormPage: React.FC = () => {
     <div className="w-full min-h-screen bg-gray-50 flex flex-col items-center relative">
       {/* 表单内容区，顶部不再有header */}
       <main className="w-full sm:max-w-md md:max-w-lg mx-auto px-4 mt-12 z-10">
-        <form
-          className="flex flex-col gap-6"
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="text-2xl font-bold text-center mb-2 text-slate-800">
             填写领奖信息
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-medium text-gray-700">
-              姓名
-            </label>
+            <label className="text-lg font-medium text-gray-700">姓名</label>
             <Input
               placeholder="请输入姓名"
               value={name}
-              onChange={(e) =>
-                setName(e.target.value)
-              }
+              onChange={(e) => setName(e.target.value)}
               disabled={isSubmitting}
-              className={
-                validationErrors.name
-                  ? "border-red-500"
-                  : ""
-              }
+              className={validationErrors.name ? "border-red-500" : ""}
             />
             {validationErrors.name && (
               <div className="text-red-500 text-sm mt-1">
@@ -182,23 +134,15 @@ const FormPage: React.FC = () => {
             )}
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-lg font-medium text-gray-700">
-              手机号
-            </label>
+            <label className="text-lg font-medium text-gray-700">手机号</label>
             <Input
               placeholder="请输入手机号"
               value={phone}
-              onChange={(e) =>
-                setPhone(e.target.value)
-              }
+              onChange={(e) => setPhone(e.target.value)}
               maxLength={11}
               inputMode="numeric"
               disabled={isSubmitting}
-              className={
-                validationErrors.phone
-                  ? "border-red-500"
-                  : ""
-              }
+              className={validationErrors.phone ? "border-red-500" : ""}
             />
             {validationErrors.phone && (
               <div className="text-red-500 text-sm mt-1">
@@ -211,41 +155,22 @@ const FormPage: React.FC = () => {
               领取地址
             </label>
             {/* 点击输入框弹出Drawer，Drawer中选择地址 */}
-            <Drawer
-              open={drawerOpen}
-              onOpenChange={
-                setDrawerOpen
-              }
-            >
+            <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
               <DrawerTrigger asChild>
                 <div
                   className={`h-14 w-full rounded-lg border px-3 flex items-center text-base cursor-pointer ${
-                    validationErrors.site
-                      ? "border-red-500"
-                      : "border-input"
-                  } ${
-                    !site
-                      ? "text-gray-500"
-                      : "text-gray-900"
-                  } ${
-                    isSubmitting
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
+                    validationErrors.site ? "border-red-500" : "border-input"
+                  } ${!site ? "text-gray-500" : "text-gray-900"} ${
+                    isSubmitting ? "opacity-50 cursor-not-allowed" : ""
                   }`}
-                  onClick={() =>
-                    !isSubmitting &&
-                    setDrawerOpen(true)
-                  }
+                  onClick={() => !isSubmitting && setDrawerOpen(true)}
                 >
-                  {site ||
-                    "请选择领取地址"}
+                  {site || "请选择领取地址"}
                 </div>
               </DrawerTrigger>
               {validationErrors.site && (
                 <div className="text-red-500 text-sm mt-1">
-                  {
-                    validationErrors.site
-                  }
+                  {validationErrors.site}
                 </div>
               )}
               <DrawerContent>
@@ -255,49 +180,30 @@ const FormPage: React.FC = () => {
                       选择领取地址
                     </DrawerTitle>
                     <DrawerDescription></DrawerDescription>
-                    <DrawerClose
-                      className="bg-blue-100"
-                      asChild
-                    >
-                      <button
-                        className="p-2 rounded-full"
-                        aria-label="关闭"
-                      >
-                        <img
-                          src={
-                            CloseIcon
-                          }
-                          alt="关闭"
-                          className="w-6 h-6"
-                        />
+                    <DrawerClose className="bg-blue-100" asChild>
+                      <button className="p-2 rounded-full" aria-label="关闭">
+                        <img src={CloseIcon} alt="关闭" className="w-6 h-6" />
                       </button>
                     </DrawerClose>
                   </div>
                   <div className="flex flex-col gap-1 px-4 pb-4">
-                    {addresses.map(
-                      (addr) => (
-                        <button
-                          key={addr}
-                          type="button"
-                          className={`w-full text-left px-4 py-3 rounded-lg border border-gray-200 bg-white text-base mb-2 hover:bg-orange-50 ${
-                            site ===
-                            addr
-                              ? "border-orange-500 text-orange-600 font-bold"
-                              : ""
-                          }`}
-                          onClick={() => {
-                            setSite(
-                              addr
-                            );
-                            setDrawerOpen(
-                              false
-                            );
-                          }}
-                        >
-                          {addr}
-                        </button>
-                      )
-                    )}
+                    {addresses.map((addr) => (
+                      <button
+                        key={addr}
+                        type="button"
+                        className={`w-full text-left px-4 py-3 rounded-lg border border-gray-200 bg-white text-base mb-2 hover:bg-orange-50 ${
+                          site === addr
+                            ? "border-orange-500 text-orange-600 font-bold"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          setSite(addr);
+                          setDrawerOpen(false);
+                        }}
+                      >
+                        {addr}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </DrawerContent>
@@ -313,9 +219,7 @@ const FormPage: React.FC = () => {
           onClick={handleSubmit}
           disabled={isSubmitting}
         >
-          {isSubmitting
-            ? "提交中..."
-            : "提交"}
+          {isSubmitting ? "提交中..." : "提交"}
         </Button>
       </div>
       {/* 成功弹窗 */}
@@ -331,9 +235,7 @@ const FormPage: React.FC = () => {
           </div>
         }
         buttonText="确认"
-        onButtonClick={() =>
-          navigate("/")
-        }
+        onButtonClick={() => navigate("/")}
         onOpenChange={setShowSuccess}
       />
       {/* 错误弹窗 */}
@@ -344,9 +246,7 @@ const FormPage: React.FC = () => {
         title="提交失败"
         description={error}
         content={
-          <div className="text-center text-gray-700 max-w-xs">
-            {error}
-          </div>
+          <div className="text-center text-gray-700 max-w-xs">{error}</div>
         }
         buttonText="我知道了"
         onButtonClick={() => {

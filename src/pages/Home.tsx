@@ -1,12 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -29,31 +23,19 @@ import "./Home.css";
  */
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const [quotaCount, setQuotaCount] =
-    useState<QuotaCount | null>(null);
-  const [isLoading, setIsLoading] =
-    useState(true);
-  const [
-    showQuotaExceeded,
-    setShowQuotaExceeded,
-  ] = useState(false);
+  const [quotaCount, setQuotaCount] = useState<QuotaCount | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showQuotaExceeded, setShowQuotaExceeded] = useState(false);
 
   // 页面加载时获取名额数量
   useEffect(() => {
     const loadQuotaCount = async () => {
       try {
-        const count =
-          await getQuotaCount();
-        console.log(
-          "获取到的名额数据:",
-          count
-        );
+        const count = await getQuotaCount();
+        console.log("获取到的名额数据:", count);
         setQuotaCount(count);
       } catch (error) {
-        console.error(
-          "加载名额数量失败:",
-          error
-        );
+        console.error("加载名额数量失败:", error);
         // 如果加载失败，设置默认值
         setQuotaCount({
           total: 1,
@@ -71,18 +53,9 @@ const Home: React.FC = () => {
 
   // 处理按钮点击
   const handleButtonClick = () => {
-    console.log(
-      "按钮点击，当前名额数据:",
-      quotaCount
-    );
-    console.log(
-      "剩余名额:",
-      quotaCount?.remaining
-    );
-    console.log(
-      "剩余名额 === 0:",
-      quotaCount?.remaining === 0
-    );
+    console.log("按钮点击，当前名额数据:", quotaCount);
+    console.log("剩余名额:", quotaCount?.remaining);
+    console.log("剩余名额 === 0:", quotaCount?.remaining === 0);
 
     if (quotaCount?.remaining === 0) {
       // 如果名额已满，显示弹窗
@@ -99,9 +72,7 @@ const Home: React.FC = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-center">
-        <div className="text-lg text-gray-600">
-          加载中...
-        </div>
+        <div className="text-lg text-gray-600">加载中...</div>
       </div>
     );
   }
@@ -111,8 +82,7 @@ const Home: React.FC = () => {
     <div
       className="min-h-screen w-full bg-gray-50 relative"
       style={{
-        backgroundImage:
-          "url(/src/assets/bg.jpg)",
+        backgroundImage: "url(/src/assets/bg.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -143,17 +113,14 @@ const Home: React.FC = () => {
         {/* 奖品展示整合为一个卡片 */}
         <Card className="w-full bg-white/80 backdrop-blur-md rounded-2xl ">
           <CardContent className="p-4 flex flex-col">
-            <div className="font-bold text-lg text-center mb-1">
-              温馨提示
-            </div>
+            <div className="font-bold text-lg text-center mb-1">温馨提示</div>
             {/* 奖品长文本说明 */}
             <div className="text-base text-gray-800 ">
               奖品包含但不限于以下内容：无菌鸡蛋，卫生用品，电子配件，其他配饰等
               <br />
               <span className="text-red-500 font-bold">
                 剩余名额：
-                {quotaCount?.remaining ||
-                  0}
+                {quotaCount?.remaining || 0}
                 个，先到先得，速来参与！
               </span>
             </div>
@@ -162,16 +129,9 @@ const Home: React.FC = () => {
       </main>
 
       {/* 名额已满弹窗 */}
-      <Dialog
-        open={showQuotaExceeded}
-        onOpenChange={
-          setShowQuotaExceeded
-        }
-      >
+      <Dialog open={showQuotaExceeded} onOpenChange={setShowQuotaExceeded}>
         <DialogContent className="flex flex-col items-center gap-4 p-8 bg-white rounded-2xl shadow-2xl z-[9999]">
-          <DialogTitle>
-            活动已结束
-          </DialogTitle>
+          <DialogTitle>活动已结束</DialogTitle>
           <DialogDescription>
             很抱歉，活动名额已满，感谢您的参与！
           </DialogDescription>
@@ -188,17 +148,12 @@ const Home: React.FC = () => {
             <br />
             <span className="text-sm text-gray-500">
               已参与人数：
-              {quotaCount?.used || 0}/
-              {quotaCount?.total || 350}
+              {quotaCount?.used || 0}/{quotaCount?.total || 350}
             </span>
           </div>
           <Button
             className="w-32 h-12 text-lg rounded-full"
-            onClick={() =>
-              setShowQuotaExceeded(
-                false
-              )
-            }
+            onClick={() => setShowQuotaExceeded(false)}
           >
             我知道了
           </Button>
