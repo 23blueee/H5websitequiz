@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
 import Result from "./pages/Result";
 import FormPage from "./pages/Form";
-import "./App.css";
 
 function App() {
   return (

@@ -8,6 +8,9 @@ const DrawerTrigger =
 const DrawerClose =
   DialogPrimitive.Close;
 
+const DrawerTitle =
+  DialogPrimitive.Title;
+
 const DrawerContent = React.forwardRef<
   React.ElementRef<
     typeof DialogPrimitive.Content
@@ -22,6 +25,7 @@ const DrawerContent = React.forwardRef<
   ) => (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40" />
+      <DialogPrimitive.Title />
       <DialogPrimitive.Content
         ref={ref}
         className={cn(
@@ -56,18 +60,26 @@ const DrawerHeader = ({
   </div>
 );
 
-const DrawerTitle = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLHeadingElement>) => (
-  <h2
-    className={cn(
-      "text-2xl font-bold",
-      className
-    )}
-    {...props}
-  />
-);
+const DrawerDescription =
+  React.forwardRef<
+    React.ElementRef<
+      typeof DialogPrimitive.Description
+    >,
+    React.ComponentPropsWithoutRef<
+      typeof DialogPrimitive.Description
+    >
+  >(({ className, ...props }, ref) => (
+    <DialogPrimitive.Description
+      ref={ref}
+      className={cn(
+        "text-base text-gray-500 px-4 mb-2",
+        className
+      )}
+      {...props}
+    />
+  ));
+DrawerDescription.displayName =
+  "DrawerDescription";
 
 export {
   Drawer,
@@ -76,4 +88,5 @@ export {
   DrawerHeader,
   DrawerTitle,
   DrawerClose,
+  DrawerDescription,
 };

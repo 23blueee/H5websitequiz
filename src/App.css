@@ -1,13 +1,2 @@
-/* 首页答题按钮呼吸动画：吸引用户注意，循环放大缩小 */
-@keyframes breath {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
-}
-
-.animate-breath {
-  animation: breath 0.7s ease-in-out infinite;
-}
+/* App.css - 全局样式文件 */
+/* 这里可以放置应用级别的全局样式 */
